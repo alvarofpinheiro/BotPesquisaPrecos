@@ -1,0 +1,39 @@
+"jsCode":
+
+const dataFinal = new Date($input.first().json.timestamp);
+
+// Cria nova data com 15 dias a menos\nconst dataInicial = new Date(dataFinal);\ndataInicial.setDate(dataFinal.getDate() - 15);
+
+// Função para formatar datas como YYYY-MM-DD
+function formatarData(d) {
+  const ano = d.getFullYear();
+  const mes = String(d.getMonth() + 1).padStart(2, '0');
+  const dia = String(d.getDate()).padStart(2, '0');
+  return `${ano}-${mes}-${dia}`;
+}
+
+return [
+  {
+    json: {
+      dataFormatadaInicial: formatarData(dataInicial),
+      dataFormatadaFinal: formatarData(dataFinal)
+    }
+  }
+];"
+
+
+"jsCode":
+
+// Captura os dados do nó anterior
+const resultado = $input.first().json.resultado || [];
+
+// Define o termo de busca (pode ser fixo ou passado por outro nó)
+const termoBusca = 'COMPONENTE'; // você pode mudar ou externalizar
+
+// Filtra os itens que contêm o termo no campo 'descricaoItem'
+const encontrados = resultado.filter(item => {
+  const descricao = (item.descricaoItem || '').toLowerCase();
+  return descricao.includes(termoBusca.toLowerCase());\n});
+
+// Retorna cada item encontrado como um objeto separado
+return encontrados.map(item => ({ json: item }));
